@@ -1,0 +1,21 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-5);
+  border: var(--border-width) dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--font-size-lg);
+}
+
+.description {
+  max-width: var(--text-width-narrow);
+  margin-bottom: var(--space-2);
+  color: var(--color-text-muted);
+}

@@ -72,6 +72,7 @@
   --shadow-raised: 0 1px 3px var(--color-shadow);
   --opacity-disabled: 0.6;
   --transition-fast: 120ms ease;
+  --transition-drawer: 200ms ease-out;
 
   /* Размеры элементов */
   --control-height: 3rem; /* 48 px — минимальная зона нажатия */
@@ -82,17 +83,41 @@
   --spinner-stroke: 2px;
   --spinner-duration: 0.8s;
 
+  --icon-size: 1.25rem;
+  --avatar-size: 2rem;
+  --menu-min-width: 13rem;
+  --dialog-width: 28rem;
+  --drawer-width: 18rem;
+  --drawer-max-width: 85vw;
+
   /* Раскладка */
   --content-width-auth: 25rem;
+  --content-max-width: 72rem;
+  --header-height: 4.5rem;
+  --sidebar-width: 16rem;
+  --card-min-width: 17rem;
+  --text-width-narrow: 32rem;
+  --z-header: 10;
+  --color-backdrop: rgb(58 46 42 / 0.4);
 
   /* Логотип: масштабируется, пропорции сохраняются */
   --logo-width-auth-min: 12.5rem;
   --logo-width-auth-fluid: 60vw;
   --logo-width-auth-max: 16.25rem;
+  /* Логотип «картинка + надпись»: ниже ~56 px надпись перестаёт читаться */
+  --logo-height-header: 3.5rem;
 
   /*
    * Брейкпоинты. В @media нельзя подставить var(), поэтому значение
    * продублировано в медиа-запросах модулей с пометкой «= --bp-nav».
    */
   --bp-nav: 768px;
+}
+
+/* = --bp-nav: на широком экране шапка и логотип крупнее */
+@media (min-width: 768px) {
+  :root {
+    --header-height: 5rem;
+    --logo-height-header: 4.25rem;
+  }
 }

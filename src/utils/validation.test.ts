@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateLogin, validatePassword } from './validation';
+import { validateLogin, validateName, validatePassword } from './validation';
 
 describe('validateLogin', () => {
   it.each(['abc', 'danis_a', 'DANIS_A', 'user_2026', 'a'.repeat(32)])('принимает «%s»', (login) => {
@@ -30,5 +30,15 @@ describe('validatePassword', () => {
 
   it.each(['', 'a'.repeat(7), 'a'.repeat(65)])('отклоняет пароль %#', (password) => {
     expect(validatePassword(password)).toEqual(expect.any(String));
+  });
+});
+
+describe('validateName', () => {
+  it.each(['Б', 'Базы данных', 'я'.repeat(100), '  Базы данных  '])('принимает название %#', (name) => {
+    expect(validateName(name)).toBeNull();
+  });
+
+  it.each(['', '   ', 'я'.repeat(101)])('отклоняет название %#', (name) => {
+    expect(validateName(name)).toEqual(expect.any(String));
   });
 });

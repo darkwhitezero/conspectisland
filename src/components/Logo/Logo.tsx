@@ -6,7 +6,8 @@ const LOGO_WIDTH = 460;
 const LOGO_HEIGHT = 306;
 
 interface LogoProps {
-  size: 'auth';
+  /** auth — крупно над формой входа, header — компактно в шапке */
+  size: 'auth' | 'header';
 }
 
 export function Logo({ size }: LogoProps) {

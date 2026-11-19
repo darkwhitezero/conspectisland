@@ -17,6 +17,11 @@ export function isApiError(error: unknown): error is ApiError {
   return error instanceof ApiError;
 }
 
+/** Текст для показа пользователю: сообщение API или общее. */
+export function errorMessage(error: unknown, fallback = 'Что-то пошло не так. Попробуйте ещё раз'): string {
+  return isApiError(error) ? error.message : fallback;
+}
+
 /** Имитация сетевой задержки, чтобы были видны состояния загрузки. */
 export const MOCK_LATENCY_MS = 300;
 

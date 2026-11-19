@@ -1,0 +1,26 @@
+.avatar {
+  display: grid;
+  place-items: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  background-color: var(--color-brand-sand);
+  color: var(--color-brand-ink);
+  font-weight: var(--font-weight-bold);
+}
+
+/* На узком экране в триггере только аватар — логин виден в самом меню */
+.login {
+  display: none;
+}
+
+/* = --bp-nav */
+@media (min-width: 768px) {
+  .login {
+    display: inline;
+  }
+}
+
+.headerLogin {
+  font-weight: var(--font-weight-bold);
+}

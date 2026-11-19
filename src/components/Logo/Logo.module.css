@@ -6,3 +6,8 @@
   width: clamp(var(--logo-width-auth-min), var(--logo-width-auth-fluid), var(--logo-width-auth-max));
   margin-inline: auto;
 }
+
+.header {
+  width: auto;
+  height: var(--logo-height-header);
+}

@@ -7,6 +7,8 @@ export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 interface ButtonProps extends ComponentProps<'button'> {
   variant?: ButtonVariant;
   fullWidth?: boolean;
+  /** Квадратная кнопка с одной иконкой; подпись — через aria-label. */
+  iconOnly?: boolean;
   /** Идёт операция: кнопка блокируется, чтобы не отправить дважды. */
   loading?: boolean;
 }
@@ -14,6 +16,7 @@ interface ButtonProps extends ComponentProps<'button'> {
 export function Button({
   variant = 'primary',
   fullWidth = false,
+  iconOnly = false,
   loading = false,
   type = 'button',
   disabled,
@@ -21,7 +24,7 @@ export function Button({
   children,
   ...rest
 }: ButtonProps) {
-  const classes = [styles.button, styles[variant], fullWidth && styles.fullWidth, className]
+  const classes = [styles.button, styles[variant], fullWidth && styles.fullWidth, iconOnly && styles.iconOnly, className]
     .filter(Boolean)
     .join(' ');
 

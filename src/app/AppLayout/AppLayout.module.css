@@ -1,0 +1,36 @@
+.skipLink {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: calc(var(--z-header) + 1);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  transform: translateY(-200%);
+}
+
+.skipLink:focus-visible {
+  transform: none;
+  color: var(--color-on-primary);
+}
+
+.body {
+  display: flex;
+  align-items: flex-start;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  max-width: var(--content-max-width);
+  padding: var(--space-5) var(--space-4) var(--space-7);
+  outline: none;
+}
+
+/* = --bp-nav */
+@media (min-width: 768px) {
+  .main {
+    padding: var(--space-6) var(--space-6) var(--space-8);
+  }
+}

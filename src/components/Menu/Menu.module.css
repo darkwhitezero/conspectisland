@@ -1,0 +1,84 @@
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding: 0 var(--space-3);
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  font-weight: var(--font-weight-semibold);
+  transition: background-color var(--transition-fast);
+}
+
+.trigger:hover,
+.trigger[aria-expanded='true'] {
+  background-color: var(--color-surface-muted);
+}
+
+.menu {
+  /* Сброс центрирования, которое браузер задаёт popover по умолчанию */
+  inset: auto;
+  margin: 0;
+  min-width: var(--menu-min-width);
+  padding: var(--space-2);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text);
+}
+
+.menu:popover-open {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Под триггером, правыми краями вровень; у нижнего края экрана — над ним */
+@supports (position-area: block-end) {
+  .menu {
+    margin-block-start: var(--space-1);
+    position-area: block-end span-inline-start;
+    position-try-fallbacks: flip-block;
+  }
+}
+
+/* Без anchor positioning — в правый верхний угол под шапкой */
+@supports not (position-area: block-end) {
+  .menu {
+    position: fixed;
+    top: var(--header-height);
+    right: var(--space-4);
+  }
+}
+
+.header {
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  margin-bottom: var(--space-2);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--color-text);
+  text-align: start;
+  text-decoration: none;
+}
+
+.item:hover,
+.item:focus-visible {
+  background-color: var(--color-primary-soft);
+  color: var(--color-text);
+}
+
+.danger,
+.danger:hover,
+.danger:focus-visible {
+  color: var(--color-danger);
+}

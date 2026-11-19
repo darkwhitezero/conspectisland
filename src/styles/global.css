@@ -27,6 +27,11 @@ a:hover {
   outline-offset: var(--focus-ring-offset);
 }
 
+/* Пока открыт модальный диалог, страница под ним не прокручивается */
+html:has(dialog:modal) {
+  overflow: hidden;
+}
+
 /* Скрыть визуально, но оставить для экранных дикторов */
 .visually-hidden {
   position: absolute;

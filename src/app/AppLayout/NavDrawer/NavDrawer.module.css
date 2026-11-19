@@ -1,0 +1,45 @@
+.drawer {
+  width: min(var(--drawer-width), var(--drawer-max-width));
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+  transform: translateX(-100%);
+  transition:
+    transform var(--transition-drawer),
+    overlay var(--transition-drawer) allow-discrete,
+    display var(--transition-drawer) allow-discrete;
+}
+
+.drawer[open] {
+  transform: translateX(0);
+}
+
+@starting-style {
+  .drawer[open] {
+    transform: translateX(-100%);
+  }
+}
+
+.drawer::backdrop {
+  background-color: var(--color-backdrop);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  overflow-y: auto;
+  padding: var(--space-2) var(--space-3) var(--space-5);
+}
+
+.top {
+  display: flex;
+  justify-content: flex-end;
+}

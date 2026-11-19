@@ -62,3 +62,8 @@
 .fullWidth {
   width: 100%;
 }
+
+.iconOnly {
+  width: var(--control-height);
+  padding: 0;
+}

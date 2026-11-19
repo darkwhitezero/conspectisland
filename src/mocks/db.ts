@@ -1,10 +1,13 @@
 // In-memory «база данных» моков. Живёт до перезагрузки страницы.
+import { seedMemberships, seedProjects, type MembershipRecord, type ProjectRecord } from './seed/projects';
 import { seedUsers, type UserRecord } from './seed/users';
 
-export type { UserRecord };
+export type { MembershipRecord, ProjectRecord, UserRecord };
 
 export const db = {
   users: structuredClone(seedUsers),
+  projects: structuredClone(seedProjects),
+  memberships: structuredClone(seedMemberships),
 };
 
 export function createId(prefix: string): string {
