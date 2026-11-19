@@ -1,0 +1,9 @@
+CLAUDE.md
+.claude/
+
+docs/domain.md
+docs/first-prompt.md
+
+node_modules/
+dist/
+*.local

@@ -1,0 +1,32 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 100dvh;
+  padding: var(--space-6) var(--space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: var(--content-width-auth);
+  padding: var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+/* = --bp-nav: на широком экране форма по центру по вертикали */
+@media (min-width: 768px) {
+  .page {
+    justify-content: center;
+  }
+
+  .card {
+    padding: var(--space-6);
+  }
+}

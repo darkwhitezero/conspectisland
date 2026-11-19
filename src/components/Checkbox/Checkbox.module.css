@@ -1,0 +1,28 @@
+.field {
+  display: grid;
+  grid-template-columns: var(--checkbox-size) 1fr;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
+  align-items: start;
+}
+
+.input {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  margin-top: var(--space-1);
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.error {
+  grid-column: 2;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-danger);
+}

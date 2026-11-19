@@ -1,0 +1,28 @@
+.spinner {
+  display: inline-block;
+  flex-shrink: 0;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border: var(--spinner-stroke) solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin var(--spinner-duration) linear infinite;
+}
+
+.large {
+  width: var(--spinner-size-lg);
+  height: var(--spinner-size-lg);
+  color: var(--color-primary);
+}
+
+.page {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

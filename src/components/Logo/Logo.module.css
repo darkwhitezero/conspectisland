@@ -1,0 +1,8 @@
+.logo {
+  height: auto;
+}
+
+.auth {
+  width: clamp(var(--logo-width-auth-min), var(--logo-width-auth-fluid), var(--logo-width-auth-max));
+  margin-inline: auto;
+}
