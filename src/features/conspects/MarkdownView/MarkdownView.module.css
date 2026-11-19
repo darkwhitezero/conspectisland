@@ -45,4 +45,19 @@
 .markdown td {
   padding: var(--space-1) var(--space-3);
   border: var(--border-width) solid var(--color-border);
+  text-align: start;
+}
+
+.markdown th {
+  background-color: var(--color-surface-muted);
+}
+
+/* Списки задач: флажок вместо маркера */
+.markdown li:has(> input[type='checkbox']) {
+  list-style: none;
+}
+
+.markdown input[type='checkbox'] {
+  margin-inline-end: var(--space-2);
+  accent-color: var(--color-primary);
 }

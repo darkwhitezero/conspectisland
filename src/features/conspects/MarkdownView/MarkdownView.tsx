@@ -1,5 +1,9 @@
 import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import styles from './MarkdownView.module.css';
+
+// Таблицы, зачёркивание, списки задач и автоссылки (GitHub Flavored Markdown).
+const PLUGINS = [remarkGfm];
 
 /**
  * Markdown как форматированный текст. Встроенный HTML не выполняется:
@@ -9,7 +13,7 @@ import styles from './MarkdownView.module.css';
 export function MarkdownView({ source }: { source: string }) {
   return (
     <div className={styles.markdown}>
-      <Markdown>{source}</Markdown>
+      <Markdown remarkPlugins={PLUGINS}>{source}</Markdown>
     </div>
   );
 }
