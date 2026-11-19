@@ -1,4 +1,4 @@
-import { useId, useState, type FormEvent } from 'react';
+import { useId, useState, type FormEvent, type ReactNode } from 'react';
 import { errorMessage } from '../../api/client';
 import { useField } from '../../utils/useField';
 import { validateName } from '../../utils/validation';
@@ -15,12 +15,23 @@ interface NameDialogProps {
   label: string;
   submitLabel: string;
   initialValue?: string;
+  /** Пояснение над полем */
+  description?: ReactNode;
   /** Сохранение. Ошибку API окно покажет само; закрывает окно вызывающий. */
   onSubmit: (name: string) => Promise<void>;
 }
 
-/** Диалог с одним полем названия: создание и переименование. */
-export function NameDialog({ open, onClose, title, label, submitLabel, initialValue, onSubmit }: NameDialogProps) {
+/** Диалог с одним полем названия: создание, переименование, форк. */
+export function NameDialog({
+  open,
+  onClose,
+  title,
+  label,
+  submitLabel,
+  initialValue,
+  description,
+  onSubmit,
+}: NameDialogProps) {
   const formId = useId();
   const [submitting, setSubmitting] = useState(false);
 
@@ -40,6 +51,7 @@ export function NameDialog({ open, onClose, title, label, submitLabel, initialVa
         </>
       }
     >
+      {description && <p className={styles.description}>{description}</p>}
       <NameForm
         id={formId}
         label={label}

@@ -1,22 +1,16 @@
 import type { ComponentProps } from 'react';
 import { Spinner } from '../Spinner';
-import styles from './Button.module.css';
+import { buttonClasses, type ButtonLook } from './buttonClasses';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
-
-interface ButtonProps extends ComponentProps<'button'> {
-  variant?: ButtonVariant;
-  fullWidth?: boolean;
-  /** Квадратная кнопка с одной иконкой; подпись — через aria-label. */
-  iconOnly?: boolean;
+interface ButtonProps extends ComponentProps<'button'>, ButtonLook {
   /** Идёт операция: кнопка блокируется, чтобы не отправить дважды. */
   loading?: boolean;
 }
 
 export function Button({
-  variant = 'primary',
-  fullWidth = false,
-  iconOnly = false,
+  variant,
+  fullWidth,
+  iconOnly,
   loading = false,
   type = 'button',
   disabled,
@@ -24,12 +18,14 @@ export function Button({
   children,
   ...rest
 }: ButtonProps) {
-  const classes = [styles.button, styles[variant], fullWidth && styles.fullWidth, iconOnly && styles.iconOnly, className]
-    .filter(Boolean)
-    .join(' ');
-
   return (
-    <button type={type} className={classes} disabled={disabled || loading} aria-busy={loading || undefined} {...rest}>
+    <button
+      type={type}
+      className={buttonClasses({ variant, fullWidth, iconOnly }, className)}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
+      {...rest}
+    >
       {loading && <Spinner />}
       {children}
     </button>

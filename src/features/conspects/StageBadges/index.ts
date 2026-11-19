@@ -1,0 +1,1 @@
+export { StageBadges } from './StageBadges';

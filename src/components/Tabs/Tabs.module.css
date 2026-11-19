@@ -1,0 +1,36 @@
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  /* На узком экране вкладки прокручиваются сами, страница — нет */
+  overflow-x: auto;
+  border-bottom: var(--border-width) solid var(--color-border);
+  scrollbar-width: none;
+}
+
+.tab {
+  flex-shrink: 0;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--tab-indicator-width) solid transparent;
+  margin-bottom: calc(-1 * var(--border-width));
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.tab:hover {
+  color: var(--color-text);
+}
+
+.tab:focus-visible {
+  outline-offset: calc(-1 * var(--focus-ring-width));
+}
+
+.active,
+.active:hover {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-primary);
+}

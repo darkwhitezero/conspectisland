@@ -1,13 +1,15 @@
 .header {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-4);
 }
 
+/* Узкое действие («⋯») остаётся рядом с заголовком, широкое — переносится */
 .text {
   display: flex;
+  flex: 1 1 var(--page-title-min-width);
   flex-direction: column;
   gap: var(--space-2);
   min-width: 0;

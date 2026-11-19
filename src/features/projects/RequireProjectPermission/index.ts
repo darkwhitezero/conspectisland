@@ -1,0 +1,1 @@
+export { RequireProjectPermission } from './RequireProjectPermission';

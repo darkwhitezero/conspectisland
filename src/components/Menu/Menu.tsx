@@ -25,10 +25,19 @@ interface MenuProps {
 export function Menu({ trigger, triggerLabel, triggerClassName, header, items }: MenuProps) {
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
   const menuItems = () => Array.from(menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? []);
   const close = () => menuRef.current?.hidePopover();
+
+  // Фокус — на триггер до действия: если пункт открывает диалог, после его
+  // закрытия браузер вернёт фокус сюда, а не на скрытый пункт меню.
+  const select = (action: () => void) => {
+    close();
+    triggerRef.current?.focus();
+    action();
+  };
 
   const handleToggle = (event: ToggleEvent<HTMLDivElement>) => {
     const isOpen = event.newState === 'open';
@@ -56,6 +65,7 @@ export function Menu({ trigger, triggerLabel, triggerClassName, header, items }:
   return (
     <>
       <button
+        ref={triggerRef}
         type="button"
         className={[styles.trigger, triggerClassName].filter(Boolean).join(' ')}
         popoverTarget={menuId}
@@ -89,10 +99,7 @@ export function Menu({ trigger, triggerLabel, triggerClassName, header, items }:
               role="menuitem"
               tabIndex={-1}
               className={className}
-              onClick={() => {
-                close();
-                item.onSelect();
-              }}
+              onClick={() => select(item.onSelect)}
             >
               {item.label}
             </button>

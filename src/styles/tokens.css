@@ -68,6 +68,7 @@
   --border-width: 1px;
   --focus-ring-width: 3px;
   --focus-ring-offset: 2px;
+  --tab-indicator-width: 3px;
   --shadow-card: 0 1px 2px var(--color-shadow), 0 6px 20px var(--color-shadow);
   --shadow-raised: 0 1px 3px var(--color-shadow);
   --opacity-disabled: 0.6;
@@ -97,6 +98,7 @@
   --sidebar-width: 16rem;
   --card-min-width: 17rem;
   --text-width-narrow: 32rem;
+  --page-title-min-width: 14rem;
   --z-header: 10;
   --color-backdrop: rgb(58 46 42 / 0.4);
 

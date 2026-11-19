@@ -1,13 +1,8 @@
 import { createId, db, type ProjectRecord } from '../mocks/db';
 import type { Project, ProjectRole } from '../types';
+import { requireProjectAccess, roleOf } from './access';
 import { delay } from './client';
 import { requireUserId } from './session';
-
-function roleOf(project: ProjectRecord, userId: string): ProjectRole | null {
-  if (project.ownerId === userId) return 'owner';
-  const membership = db.memberships.find((m) => m.projectId === project.id && m.userId === userId);
-  return membership?.role ?? null;
-}
 
 function inviteLinkFor(token: string): string {
   const origin = globalThis.location?.origin ?? '';
@@ -42,6 +37,12 @@ export async function listMyProjects(): Promise<Project[]> {
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
+export async function getProject(projectId: string): Promise<Project> {
+  await delay();
+  const { project, role } = requireProjectAccess(projectId);
+  return toProject(project, role);
+}
+
 /** Новый проект: владелец — текущий пользователь, политика «Только владелец». */
 export async function createProject(name: string): Promise<Project> {
   await delay();
@@ -55,4 +56,48 @@ export async function createProject(name: string): Promise<Project> {
   };
   db.projects.push(record);
   return toProject(record, 'owner');
+}
+
+export async function renameProject(projectId: string, name: string): Promise<Project> {
+  await delay();
+  const { project } = requireProjectAccess(projectId, 'renameProject');
+  project.name = name;
+  return toProject(project, 'owner');
+}
+
+/** Удаляет проект вместе с конспектами и участниками. */
+export async function deleteProject(projectId: string): Promise<void> {
+  await delay();
+  requireProjectAccess(projectId, 'deleteProject');
+  db.projects = db.projects.filter((p) => p.id !== projectId);
+  db.memberships = db.memberships.filter((m) => m.projectId !== projectId);
+  db.conspects = db.conspects.filter((c) => c.projectId !== projectId);
+}
+
+/**
+ * Форк — независимая копия со всеми конспектами. Владелец — тот, кто
+ * создал форк; участники не копируются, политика «Только владелец».
+ */
+export async function forkProject(projectId: string, name: string): Promise<Project> {
+  await delay();
+  const { userId } = requireProjectAccess(projectId, 'fork');
+  const fork: ProjectRecord = {
+    id: createId('p'),
+    name,
+    ownerId: userId,
+    accessPolicy: 'PRIVATE',
+    createdAt: new Date().toISOString(),
+  };
+  db.projects.push(fork);
+  const copies = db.conspects
+    .filter((c) => c.projectId === projectId)
+    .map((c) => ({ ...structuredClone(c), id: createId('c'), projectId: fork.id }));
+  db.conspects.push(...copies);
+  return toProject(fork, 'owner');
+}
+
+export async function leaveProject(projectId: string): Promise<void> {
+  await delay();
+  const { userId } = requireProjectAccess(projectId, 'leaveProject');
+  db.memberships = db.memberships.filter((m) => !(m.projectId === projectId && m.userId === userId));
 }

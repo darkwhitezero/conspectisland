@@ -1,3 +1,8 @@
+.description {
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+}
+
 .form {
   display: flex;
   flex-direction: column;
