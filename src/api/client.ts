@@ -1,7 +1,13 @@
 // Общая инфраструктура API. Сейчас функции работают с моками;
 // при подключении REST сюда переедет обёртка над fetch.
 
-export type ApiErrorCode = 'invalid_credentials' | 'login_taken' | 'unauthorized' | 'not_found' | 'forbidden';
+export type ApiErrorCode =
+  | 'invalid_credentials'
+  | 'invalid_password'
+  | 'login_taken'
+  | 'unauthorized'
+  | 'not_found'
+  | 'forbidden';
 
 export class ApiError extends Error {
   readonly code: ApiErrorCode;

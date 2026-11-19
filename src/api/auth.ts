@@ -60,3 +60,42 @@ export async function getCurrentUser(): Promise<User | null> {
   }
   return toUser(user);
 }
+
+function requireCurrentUser(): UserRecord {
+  const user = db.users.find((candidate) => candidate.id === readSession());
+  if (!user) throw new ApiError('unauthorized', 'Войдите, чтобы продолжить');
+  return user;
+}
+
+export async function changePassword(currentPassword: string, newPassword: string): Promise<void> {
+  await delay();
+  const user = requireCurrentUser();
+  if (user.password !== currentPassword) {
+    throw new ApiError('invalid_password', MESSAGES.invalidCurrentPassword);
+  }
+  user.password = newPassword;
+}
+
+/**
+ * Удаляет учётную запись. Проекты, где пользователь — владелец, удаляются
+ * целиком (с конспектами, файлами и участниками); из чужих он выходит.
+ */
+export async function deleteAccount(password: string): Promise<void> {
+  await delay();
+  const user = requireCurrentUser();
+  if (user.password !== password) {
+    throw new ApiError('invalid_password', MESSAGES.invalidPassword);
+  }
+  const ownedProjects = new Set(db.projects.filter((p) => p.ownerId === user.id).map((p) => p.id));
+  const ownedConspects = new Set(db.conspects.filter((c) => ownedProjects.has(c.projectId)).map((c) => c.id));
+  db.projects = db.projects.filter((p) => !ownedProjects.has(p.id));
+  db.conspects = db.conspects.filter((c) => !ownedConspects.has(c.id));
+  db.files = db.files.filter((f) => !ownedConspects.has(f.conspectId));
+  ownedConspects.forEach((id) => {
+    delete db.html[id];
+    delete db.stageTimers[id];
+  });
+  db.memberships = db.memberships.filter((m) => m.userId !== user.id && !ownedProjects.has(m.projectId));
+  db.users = db.users.filter((u) => u.id !== user.id);
+  clearSession();
+}

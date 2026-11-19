@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { RequireProjectPermission } from '../features/projects/RequireProjectPermission';
+import { AccountPage } from '../pages/AccountPage';
 import { AuthPage } from '../pages/AuthPage';
 import { ConspectPage } from '../pages/ConspectPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
@@ -59,6 +60,7 @@ export const router = createBrowserRouter([
               },
             ],
           },
+          { path: '/account', element: <AccountPage /> },
           // Конспект — отдельный экран без шапки и вкладок проекта
           { path: '/projects/:projectId/conspects/:conspectId', element: <ConspectPage /> },
           { path: '*', element: <NotFoundPage /> },

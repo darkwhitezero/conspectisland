@@ -98,6 +98,7 @@
   /* Раскладка */
   --content-width-auth: 25rem;
   --content-max-width: 72rem;
+  --account-max-width: 48rem;
   --header-height: 4.5rem;
   --sidebar-width: 16rem;
   --card-min-width: 17rem;

@@ -1,10 +1,17 @@
 // Тексты интерфейса, которые domain.md требует дословно.
-import type { AccessPolicy, MimeType, ProjectRole, StageStatus, StageType } from '../types';
+import type { AccessPolicy, MimeType, ProjectRole, StageStatus, StageType, SystemRole } from '../types';
 
 export const MESSAGES = {
   loginTaken: 'Этот логин уже занят',
   invalidCredentials: 'Неверный логин или пароль',
+  invalidCurrentPassword: 'Неверный текущий пароль',
+  invalidPassword: 'Неверный пароль',
 } as const;
+
+export const SYSTEM_ROLE_LABELS: Record<SystemRole, string> = {
+  user: 'Пользователь',
+  admin: 'Администратор',
+};
 
 export const PROJECT_ROLE_LABELS: Record<ProjectRole, string> = {
   owner: 'Владелец',

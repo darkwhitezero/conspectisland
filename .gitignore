@@ -7,3 +7,4 @@ docs/first-prompt.md
 node_modules/
 dist/
 *.local
+.playwright-mcp/

@@ -1,0 +1,32 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: var(--account-max-width);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+}
+
+.danger {
+  border-color: var(--color-danger-soft);
+}
+
+.title {
+  font-size: var(--font-size-lg);
+}
+
+.text {
+  color: var(--color-text-muted);
+}
+
+.action {
+  align-self: flex-start;
+}
