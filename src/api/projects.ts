@@ -4,7 +4,7 @@ import { requireProjectAccess, roleOf } from './access';
 import { delay } from './client';
 import { requireUserId } from './session';
 
-function inviteLinkFor(token: string): string {
+export function inviteLinkFor(token: string): string {
   const origin = globalThis.location?.origin ?? '';
   return `${origin}/join/${token}`;
 }

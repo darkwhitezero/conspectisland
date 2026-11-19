@@ -1,5 +1,5 @@
 // Тексты интерфейса, которые domain.md требует дословно.
-import type { MimeType, ProjectRole, StageStatus, StageType } from '../types';
+import type { AccessPolicy, MimeType, ProjectRole, StageStatus, StageType } from '../types';
 
 export const MESSAGES = {
   loginTaken: 'Этот логин уже занят',
@@ -10,6 +10,11 @@ export const PROJECT_ROLE_LABELS: Record<ProjectRole, string> = {
   owner: 'Владелец',
   editor: 'Редактор',
   reader: 'Читатель',
+};
+
+export const ACCESS_POLICY_LABELS: Record<AccessPolicy, string> = {
+  PRIVATE: 'Только владелец',
+  LINK: 'По ссылке',
 };
 
 export const STAGE_LABELS: Record<StageType, string> = {

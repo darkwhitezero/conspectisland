@@ -4,6 +4,7 @@ import { AuthPage } from '../pages/AuthPage';
 import { ConspectPage } from '../pages/ConspectPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { ProjectConspectsPage } from '../pages/ProjectConspectsPage';
+import { ProjectMembersPage } from '../pages/ProjectMembersPage';
 import { ProjectPage } from '../pages/ProjectPage';
 import { ProjectsPage } from '../pages/ProjectsPage';
 import { StubPage } from '../pages/StubPage';
@@ -33,11 +34,10 @@ export const router = createBrowserRouter([
               { index: true, element: <ProjectConspectsPage /> },
               { path: 'search', element: <StubPage title="Поиск" /> },
               {
-                // Экран «Участники и доступ» — этап 5
                 path: 'members',
                 element: (
                   <RequireProjectPermission action="manageAccess">
-                    <StubPage title="Участники и доступ" />
+                    <ProjectMembersPage />
                   </RequireProjectPermission>
                 ),
               },
