@@ -9,6 +9,7 @@ interface ButtonProps extends ComponentProps<'button'>, ButtonLook {
 
 export function Button({
   variant,
+  size,
   fullWidth,
   iconOnly,
   loading = false,
@@ -21,7 +22,7 @@ export function Button({
   return (
     <button
       type={type}
-      className={buttonClasses({ variant, fullWidth, iconOnly }, className)}
+      className={buttonClasses({ variant, size, fullWidth, iconOnly }, className)}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
       {...rest}

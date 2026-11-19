@@ -69,9 +69,28 @@ export async function renameProject(projectId: string, name: string): Promise<Pr
 export async function deleteProject(projectId: string): Promise<void> {
   await delay();
   requireProjectAccess(projectId, 'deleteProject');
+  const conspectIds = new Set(db.conspects.filter((c) => c.projectId === projectId).map((c) => c.id));
   db.projects = db.projects.filter((p) => p.id !== projectId);
   db.memberships = db.memberships.filter((m) => m.projectId !== projectId);
-  db.conspects = db.conspects.filter((c) => c.projectId !== projectId);
+  db.conspects = db.conspects.filter((c) => !conspectIds.has(c.id));
+  db.files = db.files.filter((f) => !conspectIds.has(f.conspectId));
+  conspectIds.forEach((id) => delete db.html[id]);
+}
+
+/** Копия конспекта с файлами и HTML; ссылки «распознан из» ведут на копии изображений. */
+function copyConspect(conspectId: string, projectId: string): void {
+  const source = db.conspects.find((c) => c.id === conspectId);
+  if (!source) return;
+  const copy = { ...structuredClone(source), id: createId('c'), projectId };
+  db.conspects.push(copy);
+  const files = db.files.filter((f) => f.conspectId === conspectId);
+  const newIds = new Map(files.map((f) => [f.id, createId('f')]));
+  for (const file of files) {
+    const fileCopy = { ...structuredClone(file), id: newIds.get(file.id)!, conspectId: copy.id };
+    if (file.ocrSourceFileId) fileCopy.ocrSourceFileId = newIds.get(file.ocrSourceFileId);
+    db.files.push(fileCopy);
+  }
+  if (db.html[conspectId]) db.html[copy.id] = db.html[conspectId];
 }
 
 /**
@@ -89,10 +108,7 @@ export async function forkProject(projectId: string, name: string): Promise<Proj
     createdAt: new Date().toISOString(),
   };
   db.projects.push(fork);
-  const copies = db.conspects
-    .filter((c) => c.projectId === projectId)
-    .map((c) => ({ ...structuredClone(c), id: createId('c'), projectId: fork.id }));
-  db.conspects.push(...copies);
+  db.conspects.filter((c) => c.projectId === projectId).forEach((c) => copyConspect(c.id, fork.id));
   return toProject(fork, 'owner');
 }
 

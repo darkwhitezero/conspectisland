@@ -1,0 +1,15 @@
+.frame {
+  display: block;
+  width: 100%;
+  height: var(--html-view-height);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-7) 0;
+  color: var(--color-primary);
+}

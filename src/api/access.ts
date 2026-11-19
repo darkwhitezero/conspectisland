@@ -23,3 +23,22 @@ export function requireProjectAccess(projectId: string, action?: ProjectAction) 
   if (action && !can(role, action)) throw new ApiError('forbidden', 'Недостаточно прав для этого действия');
   return { project, role, userId };
 }
+
+/** Конспект и роль в его проекте — с той же проверкой прав. */
+export function requireConspectAccess(conspectId: string, action?: ProjectAction) {
+  const conspect = db.conspects.find((c) => c.id === conspectId);
+  if (!conspect) throw new ApiError('not_found', 'Конспект не найден');
+  try {
+    return { conspect, ...requireProjectAccess(conspect.projectId, action) };
+  } catch (error) {
+    if (error instanceof ApiError && error.code === 'not_found') throw new ApiError('not_found', 'Конспект не найден');
+    throw error;
+  }
+}
+
+/** Файл и его конспект — с той же проверкой прав. */
+export function requireFileAccess(fileId: string, action?: ProjectAction) {
+  const file = db.files.find((f) => f.id === fileId);
+  if (!file) throw new ApiError('not_found', 'Файл не найден');
+  return { file, ...requireConspectAccess(file.conspectId, action) };
+}

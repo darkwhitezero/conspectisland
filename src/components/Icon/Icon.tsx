@@ -5,6 +5,8 @@ const PATHS = {
   menu: 'M4 6h16M4 12h16M4 18h16',
   close: 'M6 6l12 12M18 6L6 18',
   chevronDown: 'M6 9l6 6 6-6',
+  chevronLeft: 'M15 6l-6 6 6 6',
+  upload: 'M12 16V4M7 9l5-5 5 5M5 20h14',
   plus: 'M12 5v14M5 12h14',
   // Три точки: отрезки нулевой длины с круглыми концами
   more: 'M5 12h.01M12 12h.01M19 12h.01',

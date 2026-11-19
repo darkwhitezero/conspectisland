@@ -83,6 +83,10 @@
   --spinner-size-lg: 2rem;
   --spinner-stroke: 2px;
   --spinner-duration: 0.8s;
+  --progress-height: 0.5rem;
+  --html-view-height: 70dvh;
+  --dialog-width-wide: 52rem;
+  --file-indent: 1.5rem;
 
   --icon-size: 1.25rem;
   --avatar-size: 2rem;
@@ -98,6 +102,7 @@
   --sidebar-width: 16rem;
   --card-min-width: 17rem;
   --text-width-narrow: 32rem;
+  --text-width-reading: 72ch;
   --page-title-min-width: 14rem;
   --z-header: 10;
   --color-backdrop: rgb(58 46 42 / 0.4);

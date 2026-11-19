@@ -1,5 +1,5 @@
 // Тексты интерфейса, которые domain.md требует дословно.
-import type { ProjectRole, StageStatus, StageType } from '../types';
+import type { MimeType, ProjectRole, StageStatus, StageType } from '../types';
 
 export const MESSAGES = {
   loginTaken: 'Этот логин уже занят',
@@ -28,6 +28,15 @@ export const STAGE_STATUS_LABELS: Record<StageStatus, string> = {
   done: 'Готово',
   failed: 'Ошибка',
 };
+
+export const FILE_TYPE_LABELS: Record<MimeType, string> = {
+  'text/plain': 'TXT',
+  'text/markdown': 'MD',
+  'image/png': 'PNG',
+  'image/jpeg': 'JPG',
+};
+
+export const HTML_OUTDATED_MESSAGE = 'Конспект изменён, HTML-представление обновляется';
 
 export const CONSENT_TEXT =
   'Администратор имеет доступ на чтение ко всем проектам. При обработке конспектов их содержимое передаётся внешним ИИ-сервисам';

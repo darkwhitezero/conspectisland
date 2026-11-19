@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import styles from './Alert.module.css';
 
 interface AlertProps {
-  tone?: 'error' | 'info';
+  tone?: 'error' | 'warning' | 'info';
   children: ReactNode;
 }
 

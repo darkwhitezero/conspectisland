@@ -11,6 +11,12 @@
   color: var(--color-danger);
 }
 
+.warning {
+  background-color: var(--color-accent-soft);
+  border-color: var(--color-brand-orange);
+  color: var(--color-brand-ink);
+}
+
 .info {
   background-color: var(--color-info-soft);
   border-color: var(--color-info);

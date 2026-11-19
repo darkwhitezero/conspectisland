@@ -10,6 +10,8 @@ interface DialogProps {
   children: ReactNode;
   /** Кнопки внизу окна. Кнопка отправки формы связывается с ней атрибутом form. */
   footer?: ReactNode;
+  /** wide — для просмотра содержимого (текст, изображение) */
+  size?: 'default' | 'wide';
 }
 
 /**
@@ -18,7 +20,7 @@ interface DialogProps {
  * Содержимое монтируется только в открытом состоянии — формы каждый раз
  * начинаются с чистого листа.
  */
-export function Dialog({ open, onClose, title, children, footer }: DialogProps) {
+export function Dialog({ open, onClose, title, children, footer, size = 'default' }: DialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
 
@@ -35,7 +37,12 @@ export function Dialog({ open, onClose, title, children, footer }: DialogProps) 
   }, [open]);
 
   return (
-    <dialog ref={ref} className={styles.dialog} aria-labelledby={titleId} onClose={onClose}>
+    <dialog
+      ref={ref}
+      className={[styles.dialog, size === 'wide' && styles.wide].filter(Boolean).join(' ')}
+      aria-labelledby={titleId}
+      onClose={onClose}
+    >
       {open && (
         <>
           <header className={styles.header}>

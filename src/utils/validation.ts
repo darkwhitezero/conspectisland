@@ -1,5 +1,6 @@
 // Клиентская валидация (domain.md, раздел 5).
 // Каждый валидатор возвращает текст ошибки для показа под полем или null.
+import type { MimeType } from '../types';
 
 export const LOGIN_RULES = {
   minLength: 3,
@@ -41,6 +42,47 @@ export function validateName(value: string): string | null {
   if (name.length === 0) return 'Введите название';
   if (name.length > NAME_RULES.maxLength) {
     return `Название должно содержать от ${NAME_RULES.minLength} до ${NAME_RULES.maxLength} символов`;
+  }
+  return null;
+}
+
+/** Исходный файл (domain.md, раздел 5) */
+export const SOURCE_FILE_RULES = {
+  maxBytes: 10 * 1024 * 1024,
+  /** Для атрибута accept у поля выбора файла */
+  accept: '.txt,.md,.png,.jpg,.jpeg',
+} as const;
+
+const MIME_BY_EXTENSION: Record<string, MimeType> = {
+  txt: 'text/plain',
+  md: 'text/markdown',
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+};
+
+/** Тип файла по расширению; null — формат не поддерживается. */
+export function mimeTypeOf(fileName: string): MimeType | null {
+  const extension = fileName.split('.').pop()?.toLowerCase() ?? '';
+  return fileName.includes('.') ? (MIME_BY_EXTENSION[extension] ?? null) : null;
+}
+
+/**
+ * Проверка исходного файла перед загрузкой. Возвращает причину
+ * отклонения (её показывают вместе с именем файла) или null.
+ */
+export async function validateSourceFile(file: File): Promise<string | null> {
+  const mimeType = mimeTypeOf(file.name);
+  if (!mimeType) return 'неподдерживаемый формат — можно TXT, MD, PNG или JPG';
+  if (file.size === 0) return 'файл пустой';
+  if (file.size > SOURCE_FILE_RULES.maxBytes) return 'файл больше 10 МБ';
+  if (mimeType.startsWith('text/')) {
+    try {
+      // fatal: true — любая последовательность не в UTF-8 вызывает ошибку
+      new TextDecoder('utf-8', { fatal: true }).decode(await file.arrayBuffer());
+    } catch {
+      return 'текст не в кодировке UTF-8';
+    }
   }
   return null;
 }

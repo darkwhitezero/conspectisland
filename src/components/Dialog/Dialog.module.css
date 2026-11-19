@@ -11,6 +11,10 @@
   color: var(--color-text);
 }
 
+.wide {
+  width: min(var(--dialog-width-wide), calc(100% - 2 * var(--space-4)));
+}
+
 .dialog::backdrop {
   background-color: var(--color-backdrop);
 }
@@ -24,7 +28,9 @@
 }
 
 .title {
+  min-width: 0;
   font-size: var(--font-size-xl);
+  overflow-wrap: anywhere;
 }
 
 .body {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDateTime } from './format';
+import { formatDateTime, formatFileSize } from './format';
 
 // Даты строятся в местном времени, поэтому тесты не зависят от пояса машины.
 const local = (...parts: [number, number, number, number, number]) =>
@@ -20,5 +20,17 @@ describe('formatDateTime', () => {
 
   it('вместо битой даты показывает прочерк', () => {
     expect(formatDateTime('not-a-date')).toBe('—');
+  });
+});
+
+describe('formatFileSize', () => {
+  it.each([
+    [512, '512 Б'],
+    [1023, '1023 Б'],
+    [348_160, '340 КБ'],
+    [1024 * 1024 * 1.2, '1,2 МБ'],
+    [10 * 1024 * 1024, '10 МБ'],
+  ])('%d байт → %s', (bytes, expected) => {
+    expect(formatFileSize(bytes)).toBe(expected);
   });
 });
